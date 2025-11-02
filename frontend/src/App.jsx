@@ -1,34 +1,36 @@
-import React from "react";
-import Register from "./pages/Auth/Register";
-import Login from "./pages/Auth/Login";
-import CalendarGrid from "./components/calendar/CalendarGrid/CalendarGrid";
-import CalendarHeader from "./components/calendar/CalendarHeader/CalendarHeader";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import AuthPage from "./pages/Auth/AuthPage";
+import { useAuth } from "./context/AuthContext";
+import Calendar from "./pages/Calendar/Calendar";
 
 const App = () => {
-  return (<div>
+  const { user } = useAuth();
 
-    {/* <Register/> */}
-    {/* <Login/> */}
+  return (
+    <Router>
+      <Routes>
+        <Route
+          path="/calendar"
+          element={user ? <Calendar /> : <Navigate to="/auth" replace />}
+        />
 
-    <CalendarGrid
-      date={new Date(2024, 10, 15)}
-      isCurrentMonth={true}
-      isToday={true}
-      isWeekend={false}
-      events={[
-        { id: '1', title: 'Meeting', time: '10:00 AM', color: '#039be5' },
-        { id: '2', title: 'Lunch', time: '12:00 PM' },
-        { id: '1', title: 'Meeting', time: '10:00 AM', color: '#039be5' },
-        { id: '1', title: 'Meeting', time: '10:00 AM', color: '#039be5' }
-      ]}
-      onDateClick={(date) => console.log('Date clicked:', date)}
-      onEventClick={(event) => console.log('Event clicked:', event)}
-    />
+        <Route
+          path="/auth"
+          element={!user ? <AuthPage /> : <Navigate to="/calendar" replace />}
+        />
 
-      {/* <CalendarHeader/> */}
-
-
-  </div>);
+        <Route
+          path="*"
+          element={<Navigate to={user ? "/calendar" : "/auth"} replace />}
+        />
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;

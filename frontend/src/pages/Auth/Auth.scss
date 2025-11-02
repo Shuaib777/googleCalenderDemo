@@ -1,5 +1,3 @@
-// Simple Auth Styling (Relative Units)
-
 .auth-container {
   min-height: 100vh;
   display: flex;
@@ -102,6 +100,16 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  .auth-switch-btn {
+    border: none;
+    padding: none;
+    color: var(--primary-blue);
+    cursor: pointer;
+  }
+  .auth-switch-btn:hover {
+    text-decoration: underline;
   }
 }
 
